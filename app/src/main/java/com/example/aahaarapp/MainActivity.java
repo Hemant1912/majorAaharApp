@@ -3,6 +3,7 @@ package com.example.aahaarapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         donate.setOnClickListener(new View.OnClickListener ()
         {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Donate.class);
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), UserdataActivity.class);
+                Intent intent = new Intent(getApplicationContext(), History.class);
                 startActivity(intent);
             }
         });

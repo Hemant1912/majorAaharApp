@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -32,6 +34,10 @@ public class Signup extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+
+    DatabaseReference myRef = database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +50,9 @@ public class Signup extends AppCompatActivity {
         mPhone = findViewById(R.id.phone);
         mRegisterBtn=findViewById(R.id.register);
         mLoginBtn = findViewById(R.id.login);
-
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
+
 
         if(fAuth.getCurrentUser() !=null){
             //startActivity(new Intent(getApplicationContext(),MainActivity.class));
@@ -61,10 +67,13 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+
                 String email = mEmail.getText().toString().trim();
                 String password= mPassword.getText().toString().trim();
                 String name= mFullName.getText().toString().trim();
                 String phone= mPhone.getText().toString().trim();
+
+
 
                 if(TextUtils.isEmpty(email))
                 {
@@ -102,6 +111,11 @@ public class Signup extends AppCompatActivity {
                                     Toast.makeText(Signup.this, "Registered Successfully.", Toast.LENGTH_SHORT) .show();
                                 }
                             });
+
+                            myRef.child("User").child(userID).child("Name").setValue(name);
+                            myRef.child("User").child(userID).child("Email").setValue(email);
+                            myRef.child("User").child(userID).child("Password").setValue(password);
+
                             //startActivity(new Intent(getApplicationContext(),MainActivity.class));
                             Intent intent = new Intent(Signup.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

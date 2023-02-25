@@ -30,6 +30,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
@@ -40,7 +42,7 @@ import com.google.firebase.firestore.ServerTimestamp;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Receive extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class Receive extends AppCompatActivity  {
 
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
@@ -48,11 +50,14 @@ public class Receive extends AppCompatActivity implements OnMapReadyCallback, Go
     LocationRequest mLocationRequest;
     private int REQUEST_CODE = 11;
     SupportMapFragment mapFragment;
-    EditText mFullName,mDescription;
-    Button mSubmitBtn;
+    EditText mFullName, mDescription;
+    Button SubmitBtn;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
+
     public static final String TAG = "TAG";
 
     @Override
@@ -61,12 +66,26 @@ public class Receive extends AppCompatActivity implements OnMapReadyCallback, Go
         setContentView(R.layout.activity_receive);
         mFullName = findViewById(R.id.receivername);
         mDescription = findViewById(R.id.description);
-        mSubmitBtn=findViewById(R.id.submit);
+        SubmitBtn = findViewById(R.id.submit);
 
-        fAuth=FirebaseAuth.getInstance();
-        fStore= FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
 
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
+        SubmitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String fullname = mFullName.getText().toString().trim();
+                String description= mDescription.getText().toString().trim();
+                String type= "Receiver";
+                myRef.child("Receiver").child(fAuth.getUid().toString()).child("Receiver name ").setValue(mFullName.getText().toString());
+                myRef.child("Receiver").child(fAuth.getUid().toString()).child("Receiver Details ").setValue(mDescription.getText().toString());
+            }
+        });
+
+    }
+}
+
+
+  /*      mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mapFragment.getMapAsync(this);
         } else {
@@ -100,10 +119,6 @@ public class Receive extends AppCompatActivity implements OnMapReadyCallback, Go
         mLastLocation = location;
         LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
 
-        //MarkerOptions markerOptions1 = new MarkerOptions().position(latLng).title("You are here");
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        //mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-        //mMap.addMarker(markerOptions1).showInfoWindow();
 
         MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("You are here");
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
@@ -115,17 +130,10 @@ public class Receive extends AppCompatActivity implements OnMapReadyCallback, Go
                 String fullname = mFullName.getText().toString().trim();
                 String description= mDescription.getText().toString().trim();
                 String type= "Receiver";
+                myRef.child("Receiver").child(fAuth.getUid().toString()).child("Receiver name ").setValue(mFullName.getText().toString());
+                myRef.child("Receiver").child(fAuth.getUid().toString()).child("Receiver Details ").setValue(mDescription.getText().toString());
 
-                if(TextUtils.isEmpty(fullname))
-                {
-                    mFullName.setError("Name is Required.");
-                    return;
-                }
-                if(TextUtils.isEmpty(description))
-                {
-                    mFullName.setError("Description is Required.");
-                    return;
-                }
+
 
 
                 userID = fAuth.getCurrentUser().getUid();
@@ -199,3 +207,4 @@ public class Receive extends AppCompatActivity implements OnMapReadyCallback, Go
         }
     }
 }
+*/

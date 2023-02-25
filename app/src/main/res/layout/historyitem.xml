@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardDonate"
+
+        android:layout_width="390dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="5dp"
+
+        android:layout_gravity="center"
+        app:cardBackgroundColor="@color/gray"
+        android:layout_margin="5dp">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical"
+           >
+           <TextView
+               android:id="@+id/historyname"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="user1"
+               android:fontFamily="@font/opensans"
+               android:textSize="20dp"
+               android:maxLines="1"
+               android:textColor="@color/white"
+
+               android:gravity="center_horizontal" />
+           <TextView
+               android:id="@+id/historyfood"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="pav bhaji"
+               android:fontFamily="@font/opensans"
+               android:textSize="18dp"
+               android:maxLines="1"
+               android:padding="5dp"
+               android:textColor="@color/white"
+               android:layout_marginLeft="10dp"
+               android:layout_gravity="" />
+          <!--
+           <TextView
+               android:id="@+id/historyphone"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text=""
+               android:fontFamily="@font/opensans"
+               android:textSize="18dp"
+               android:layout_margin="10dp"
+               android:textColor="#CACACA"
+               />
+           -->
+           <TextView
+               android:id="@+id/historydesc"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="jkhsdkjnklashyrlks jlksdjssfs fsgfd gfd"
+               android:fontFamily="@font/opensans"
+               android:textSize="18dp"
+               android:layout_margin="10dp"
+               android:textColor="#CACACA"
+               />
+       </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
